@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<EventGhost Version="1669" Guid="{F59FEC07-7DB6-4E67-9434-49BCFCF471C3}" Time="1420848185.6">
+    <Autostart Name="Autostart">
+        <Plugin Identifier="PS3" Guid="{7224079E-1823-48B0-8ED6-30973BDDC96D}" File="PS3">
+            gAIoWAAAAABxAIiJiImJRwAAAAAAAAAARwAAAAAAAAAARz/wAAAAAAAARz/wAAAAAAAAiVV7XFw/XGhpZCN7MDAwMDExMjQtMDAwMC0xMDAwLTgwMDAtMDA4MDVmOWIzNGZifV92aWQmMDAwMjA1NGNfcGlkJjAzMDYjOSY0OWM4NmUmMCYwMDAwI3s0ZDFlNTViMi1mMTZmLTExY2YtODhjYi0wMDExMTEwMDAwMzB9cQFNTAVYHwAAAFNvbnkgQ29tcHV0ZXIgRW50ZXJ0YWlubWVudCBJbmNxAk0GA1gRAAAAQkQgUmVtb3RlIENvbnRyb2xxA0sAiXRxBC4=
+        </Plugin>
+        <Plugin Identifier="Timer" Guid="{6149CA99-1FCD-4450-9160-7543BC20CFD3}" File="Timer">
+            gAIpLg==
+        </Plugin>
+        <Action>
+            Timer.TimerAction(u'timer', 0, 0, 10.0, u'timer', False, True, 0, u'00:00:00')
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'remoteBatteryCheckCount = 0')
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'remoteBatteryNotificationFlag = 0')
+        </Action>
+    </Autostart>
+    <Folder Name="PS3 Monitor">
+        <Macro Name="clear OSD">
+            <Event Name="PS3.*" />
+            <Action>
+                EventGhost.ShowOSD(u'', u'0;-24;0;0;0;700;0;0;0;1;0;0;2;32;Arial', (255, 255, 255), (0, 0, 0), 0, (0, 0), 0, 0.01, False)
+            </Action>
+        </Macro>
+        <Macro Name="battery level monitor" id="15">
+            <Event Name="Timer.timer" />
+            <Action>
+                PS3.GetBatteryLevel()
+            </Action>
+            <Action Name="Python Script: check if batterylevel&lt;4">
+                EventGhost.PythonScript(u"if eg.result is not None:\n    batteryLevel=eg.result\n    if batteryLevel &lt; 4:  #it would work better if each new low battery level(3, 2, 1) retriggers the battery notification in case one is missed\n        eg.globals.remoteBatteryCheckCount = eg.globals.remoteBatteryCheckCount + 1\n        if eg.globals.remoteBatteryCheckCount&gt;3 and eg.globals.remoteBatteryNotificationFlag == 0:  #used to avoid false triggers or maybe it oscillates between 5 and 4 for a while when it is on the edge\n            eg.plugins.EventGhost.ShowOSD(u'REMOTE BATTERY LOW', u'0;-32;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 0, (0, 0), 0, 0.0, False)\n            eg.globals.remoteBatteryNotificationFlag = 1  #only show the notification once\n    else:\n        eg.globals.remoteBatteryCheckCount=0\n        eg.globals.remoteBatteryNotificationFlag=0")
+            </Action>
+        </Macro>
+        <Macro Name="connection monitor">
+            <Event Name="PS3.Stopped" />
+            <Action>
+                EventGhost.ShowOSD(u'REMOTE DISCONNECTED', u'0;-24;0;0;0;700;0;0;0;1;0;0;2;32;Arial', (255, 255, 255), (0, 0, 0), 0, (0, 0), 0, 0.0, False)
+            </Action>
+        </Macro>
+        <Macro Name="battery level OSD">
+            <Action>
+                PS3.GetBatteryLevel()
+            </Action>
+            <Action>
+                EventGhost.ShowOSD(u'{eg.result}', u'0;-24;0;0;0;700;0;0;0;1;0;0;2;32;Arial', (255, 255, 255), (0, 0, 0), 0, (0, 0), 0, 3.0099999999999998, False)
+            </Action>
+        </Macro>
+    </Folder>
+</EventGhost>

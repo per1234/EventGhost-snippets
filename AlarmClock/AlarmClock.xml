@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<EventGhost Version="1669" Guid="{B64DEF7A-EEC8-4BBB-A4E4-BD5E51DD4493}" Time="1422695693.1">
+    <Autostart Name="Autostart">
+        <Plugin Identifier="OSM" Guid="{FCF3C7A7-FBC1-444D-B768-9477521946DC}" File="OSM">
+            gAIpLg==
+        </Plugin>
+        <Plugin Identifier="SchedulGhost" Guid="{39EFE2FF-6CA9-4450-B0E3-1AA125420B37}" File="SchedulGhost">
+            gAIoWAgAAABFOlxTdHVmZnEAWAAAAABxAVgMAAAAU2NoZWR1bEdob3N0cQJdcQMoXXEEXXEFZUsAdHEGLg==
+        </Plugin>
+        <Action>
+            EventGhost.PythonCommand(u'alarmClockTime = ""')
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'alarmClockHour = 0')
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'alarmClockMinutes = 0')
+        </Action>
+        <Action Name="alarm clock delay duration for the automatic setting option:">
+            EventGhost.Comment()
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'alarmClockDelayHours=5')
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'alarmClockDelayMinutes=15')
+        </Action>
+    </Autostart>
+    <Folder Name="alarmClock">
+        <Folder Name="hour">
+            <Macro Name="OS Menu: Hour">
+                <Action>
+                    OSM.ShowMenu([(u'OFF', u'OFF'), (u'AUTO', u'auto'), (u'1', u'1'), (u'2', u'2'), (u'3', u'3'), (u'4', u'4'), (u'5', u'5'), (u'6', u'6'), (u'7', u'7'), (u'8', u'8'), (u'9', u'9'), (u'10', u'10'), (u'11', u'11'), (u'12', u'12')], (75, 75, 75), (255, 255, 255), u'0;-53;0;0;0;700;0;0;0;0;3;2;1;34;Tahoma', u'OSMalarmClock', 0, 0, (0, 0, 255), (0, 255, 0), False, False)
+                </Action>
+                <Action>
+                    EventGhost.NewJumpIf(XmlIdLink(87), 2, True)
+                </Action>
+            </Macro>
+            <Macro Name="Automatic Alarm Setter">
+                <Event Name="OSMalarmClock.auto" />
+                <Action>
+                    EventGhost.PythonScript(u'eg.globals.alarmClockMinutes = int(eg.Utils.time.strftime("%M")) + eg.globals.alarmClockDelayMinutes\neg.globals.alarmClockHour = int(eg.Utils.time.strftime("%H")) + eg.globals.alarmClockDelayHours\nif eg.globals.alarmClockMinutes &gt; 60:\n    eg.globals.alarmClockMinutes -= 60\n    eg.globals.alarmClockHour += 1\nif eg.globals.alarmClockMinutes &lt; 8:\n    eg.globals.alarmClockMinutes = 15\nif eg.globals.alarmClockMinutes &gt;= 8 and eg.globals.alarmClockMinutes &lt; 23:\n    eg.globals.alarmClockMinutes = 15\nif eg.globals.alarmClockMinutes &gt;= 23 and eg.globals.alarmClockMinutes &lt; 38:\n    eg.globals.alarmClockMinutes = 30\nif eg.globals.alarmClockMinutes &gt;= 38 and eg.globals.alarmClockMinutes &lt; 53:\n    eg.globals.alarmClockMinutes = 45\nif eg.globals.alarmClockMinutes &gt;= 53:\n    eg.globals.alarmClockMinutes = 0\n    eg.globals.alarmClockHour += 1\nif eg.globals.alarmClockHour &gt;= 24:\n    eg.globals.alarmClockHour -= 24')
+                </Action>
+                <Action>
+                    EventGhost.StopProcessing()
+                </Action>
+                <Action>
+                    EventGhost.NewJumpIf(XmlIdLink(83), 2, False)
+                </Action>
+            </Macro>
+            <Macro Name="Alarm Off">
+                <Event Name="OSMalarmClock.OFF" />
+                <Action>
+                    SchedulGhost.DisableAll()
+                </Action>
+                <Action>
+                    EventGhost.ShowOSD(u'OFF', u'0;-400;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 1.5, False)
+                </Action>
+                <Action>
+                    EventGhost.StopProcessing()
+                </Action>
+            </Macro>
+            <Macro Name="1">
+                <Event Name="OSMalarmClock.1" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=1')
+                </Action>
+            </Macro>
+            <Macro Name="2">
+                <Event Name="OSMalarmClock.2" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=2')
+                </Action>
+            </Macro>
+            <Macro Name="3">
+                <Event Name="OSMalarmClock.3" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=3')
+                </Action>
+            </Macro>
+            <Macro Name="4">
+                <Event Name="OSMalarmClock.4" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=4')
+                </Action>
+            </Macro>
+            <Macro Name="5">
+                <Event Name="OSMalarmClock.5" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=5')
+                </Action>
+            </Macro>
+            <Macro Name="6">
+                <Event Name="OSMalarmClock.6" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=6')
+                </Action>
+            </Macro>
+            <Macro Name="7">
+                <Event Name="OSMalarmClock.7" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=7')
+                </Action>
+            </Macro>
+            <Macro Name="8">
+                <Event Name="OSMalarmClock.8" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=8')
+                </Action>
+            </Macro>
+            <Macro Name="9">
+                <Event Name="OSMalarmClock.9" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=9')
+                </Action>
+            </Macro>
+            <Macro Name="10">
+                <Event Name="OSMalarmClock.10" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=10')
+                </Action>
+            </Macro>
+            <Macro Name="11">
+                <Event Name="OSMalarmClock.11" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=11')
+                </Action>
+            </Macro>
+            <Macro Name="12">
+                <Event Name="OSMalarmClock.12" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour=0')
+                </Action>
+            </Macro>
+        </Folder>
+        <Folder Name="minutes">
+            <Macro Name="OS Menu: Minutes">
+                <Event Name="OSMalarmClock.*" />
+                <Action>
+                    OSM.ShowMenu([(u'00', u'00'), (u'15', u'15'), (u'30', u'30'), (u'45', u'45')], (75, 75, 75), (255, 255, 255), u'0;-53;0;0;0;700;0;0;0;0;3;2;1;34;Tahoma', u'OSMalarmClockMinutes', 0, 0, (0, 0, 255), (0, 255, 0), False, False)
+                </Action>
+            </Macro>
+            <Macro Name="00">
+                <Event Name="OSMalarmClockMinutes.00" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockMinutes=0')
+                </Action>
+            </Macro>
+            <Macro Name="15">
+                <Event Name="OSMalarmClockMinutes.15" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockMinutes=15')
+                </Action>
+            </Macro>
+            <Macro Name="30">
+                <Event Name="OSMalarmClockMinutes.30" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockMinutes=30')
+                </Action>
+            </Macro>
+            <Macro Name="45">
+                <Event Name="OSMalarmClockMinutes.45" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockMinutes=45')
+                </Action>
+            </Macro>
+        </Folder>
+        <Folder Name="AM/PM">
+            <Macro Name="OS Menu: AM/PM">
+                <Event Name="OSMalarmClockMinutes.*" />
+                <Action>
+                    OSM.ShowMenu([(u'AM', u'AM'), (u'PM', u'PM')], (75, 75, 75), (255, 255, 255), u'0;-53;0;0;0;700;0;0;0;0;3;2;1;34;Tahoma', u'OSMalarmClockAMPM', 0, 0, (0, 0, 255), (0, 255, 0), False, False)
+                </Action>
+            </Macro>
+            <Macro Name="PM">
+                <Event Name="OSMalarmClockAMPM.PM" />
+                <Action>
+                    EventGhost.PythonCommand(u'alarmClockHour += 12')
+                </Action>
+            </Macro>
+        </Folder>
+        <Macro Name="Set Alarm" id="83">
+            <Event Name="OSMalarmClockAMPM.*" />
+            <Action>
+                EventGhost.PythonScript(u'eg.globals.alarmClockTime = str(eg.globals.alarmClockMinutes)\nif eg.globals.alarmClockMinutes &lt; 10:\n    eg.globals.alarmClockTime = "0" + eg.globals.alarmClockTime\neg.globals.alarmClockTime = str(eg.globals.alarmClockHour) + eg.globals.alarmClockTime\nif eg.globals.alarmClockHour &lt; 10:\n    eg.globals.alarmClockTime = "0" + eg.globals.alarmClockTime\neg.plugins.SchedulGhost.DisableAll()\neg.plugins.SchedulGhost.EnableSchedule(eg.globals.alarmClockTime)')
+            </Action>
+            <Action>
+                EventGhost.ShowOSD(u'{eg.globals.alarmClockTime}', u'0;-400;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 1.5, False)
+            </Action>
+        </Macro>
+        <Macro Name="OSD: Current Time" id="87">
+            <Action>
+                EventGhost.ShowOSD(u'{eg.Utils.time.strftime("%I:%M")}', u'0;-400;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 1.5, False)
+            </Action>
+        </Macro>
+    </Folder>
+</EventGhost>

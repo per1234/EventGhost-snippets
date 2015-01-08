@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<EventGhost Version="1700" Guid="{F806A40F-282B-4141-9A7E-BBCBF6F25A46}" Time="1433469724.31">
+    <Autostart Name="Autostart" Expanded="True">
+        <Plugin Identifier="Tira" Guid="{B0E45461-630A-4FFC-BA92-9A8281DC112C}" File="Tira">
+            gAJLBYVxAC4=
+        </Plugin>
+        <Plugin Identifier="FileOperations" Guid="{50D933C5-F93B-4A8A-A6CE-95A40F906036}" File="FileOperations">
+            gAIpLg==
+        </Plugin>
+        <Action>
+            FileOperations.Read(0, u'E:\\Stuff\\misc\\programfiles\\CurrentVolume.txt', 0, 0, 'cp1252', 1, False, 1)
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'volume = int(eg.result)')
+        </Action>
+        <Action>
+            FileOperations.Read(0, u'E:\\Stuff\\misc\\programfiles\\AmpState.txt', 0, 0, 'cp1252', 1, False, 1)
+        </Action>
+        <Action>
+            EventGhost.PythonCommand(u'ampState = int(eg.result)')
+        </Action>
+    </Autostart>
+    <Folder Name="receiverControl">
+        <Folder Name="power">
+            <Macro Name="ampOn">
+                <Action>
+                    EventGhost.PythonScript(u'if eg.globals.ampState == 1:\n    eg.StopMacro()')
+                </Action>
+                <Action>
+                    EventGhost.NewJumpIf(XmlIdLink(17), 2, False)
+                </Action>
+            </Macro>
+            <Macro Name="ampOff">
+                <Action>
+                    EventGhost.PythonScript(u'if eg.globals.ampState == 0:\n    eg.StopMacro()')
+                </Action>
+                <Action>
+                    EventGhost.NewJumpIf(XmlIdLink(17), 2, False)
+                </Action>
+            </Macro>
+            <Macro Name="ampPowerToggle" id="17">
+                <Event Name="PS3.Button.L2" />
+                <Event Name="OSM.Keyboard.mute" />
+                <Action Name="I want to set this up to turn amp power off via duino relay , and then use the relay and then the tira transmit power to turn the amp off so that the off state will always be synchec">
+                    EventGhost.Comment()
+                </Action>
+                <Action Name="Home Electronics Tira: Transmit IR: Power">
+                    Tira.TransmitIR('\x00\x00\x00\x00\x08\x00\x00\x00%\x04\x00\x00\x12\x02\x00\x00&gt;\x00\x00\x00\xc4\x00\x00\x00d\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x004\x88\x93\x04\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x0c\x00\x00\x00\x08R\x00\x00\x00\x00\x00\x00\x87\x00\x00\x00C\x00\x00\x00\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x03\x02\x03\x02\x03\x02\x02\x02\x02\x02\x02\x02\x03\x02\x03\x02\x02\x02\x02\x02\x02\x02\x03\x02\x03\x02\x03\x02\x04\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x03\x02\x03\x02\x03\x02\x02\x02\x02\x02\x02\x02\x03\x02\x03\x02\x02\x02\x02\x02\x02\x02\x03\x02\x03\x02\x03\x02', 1, -1)
+                </Action>
+                <Action>
+                    EventGhost.PythonScript(u"if eg.globals.ampState == 0:\n    eg.plugins.FileOperations.Write(2, u'1', u'E:\\\\Stuff\\\\misc\\\\programfiles\\\\ampState.txt', 0, 2, False, False, False, 'cp1252')\n    eg.globals.ampState = 1\nelse:\n    eg.plugins.FileOperations.Write(2, u'0', u'E:\\\\Stuff\\\\misc\\\\programfiles\\\\ampState.txt', 0, 2, False, False, False, 'cp1252')\n    eg.globals.ampState = 0")
+                </Action>
+            </Macro>
+        </Folder>
+        <Folder Name="volume">
+            <Macro Name="vol. up">
+                <Event Name="PS3.Button.L1" />
+                <Event Name="Keyboard.Clear+Up" />
+                <Action Name="Home Electronics Tira: Transmit IR:Vol. Up">
+                    Tira.TransmitIR('\x00\x00\x00\x00\x08\x00\x00\x00&amp;\x04\x00\x00\x12\x02\x00\x00&lt;\x00\x00\x00\xc5\x00\x00\x00e\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x004\x88\x93\x04\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x0c\x00\x00\x00\xb4_\x00\x00\x00\x00\x00\x00\x87\x00\x00\x00C\x00\x00\x00\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x03\x02\x03\x02\x04\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x03\x02\x03\x02', 1, -1)
+                </Action>
+                <Action Name="Python Script: volume=volume+1">
+                    EventGhost.PythonScript(u'if eg.globals.volume &lt; 95:\n    eg.globals.volume = eg.globals.volume + 1')
+                </Action>
+                <Action>
+                    EventGhost.ShowOSD(u'{eg.globals.volume}', u'0;-147;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 0.69999999999999996, False)
+                </Action>
+                <Action>
+                    EventGhost.AutoRepeat(0.29999999999999999, 0.0, 0.0, 0.0)
+                </Action>
+                <Action>
+                    FileOperations.Write(2, u'{eg.globals.volume}', u'E:\\Stuff\\misc\\programfiles\\currentvolume.txt', 0, 0, False, False, False, 'cp1252')
+                </Action>
+            </Macro>
+            <Macro Name="vol. down">
+                <Event Name="PS3.Button.L3" />
+                <Event Name="Keyboard.Clear+Down" />
+                <Action Name="Home Electronics Tira: Transmit IR: Vol. Down">
+                    Tira.TransmitIR('\x00\x00\x00\x00\x08\x00\x00\x00&amp;\x04\x00\x00\x12\x02\x00\x00&gt;\x00\x00\x00\xc4\x00\x00\x00$\x00\x00\x00Z\x00\x00\x00\x8eX\x00\x00\xe2\x00\x00\x00e\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x004\x88\x93\x04\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x0c\x00\x00\x00\xc0]\x00\x00\x00\x00\x00\x00\x89\x00\x00\x00\xff\xff\xff\xff\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x04\x05\x04\x06\x04\x05\x04\x07\x02\x03\x02\x03\x02\x03\x02\x08\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x03\x02\x03\x02\x08\x00', 1, -1)
+                </Action>
+                <Action Name="Python Script: volume=volume-1">
+                    EventGhost.PythonScript(u'if eg.globals.volume &gt; 0:\n    eg.globals.volume=eg.globals.volume-1')
+                </Action>
+                <Action>
+                    EventGhost.ShowOSD(u'{eg.globals.volume}', u'0;-147;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 0.69999999999999996, False)
+                </Action>
+                <Action>
+                    EventGhost.AutoRepeat(0.29999999999999999, 0.0, 0.0, 0.0)
+                </Action>
+                <Action>
+                    FileOperations.Write(2, u'{eg.globals.volume}', u'E:\\Stuff\\misc\\programfiles\\currentvolume.txt', 0, 0, False, False, False, 'cp1252')
+                </Action>
+                <Action>
+                    System.MuteOff(0)
+                </Action>
+            </Macro>
+            <Folder Name="volume presets">
+                <Folder Name="Max Volume Preset">
+                    <Macro Name="Part 1:If button is held down 2.0 sec, go to: Part 2">
+                        <Event Name="PS3.Button.R1" />
+                        <Action>
+                            EventGhost.JumpIfLongPress(1.0, XmlIdLink(46))
+                        </Action>
+                    </Macro>
+                    <Macro Name="Part 2" id="46">
+                        <Event Name="OSM.Keyboard.R1" />
+                        <Event Name="Main.vol.max" />
+                        <Action>
+                            EventGhost.ShowOSD(u'MAX', u'0;-200;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 1.0, False)
+                        </Action>
+                        <Action>
+                            EventGhost.PythonCommand(u'volpreset=72')
+                        </Action>
+                        <Action>
+                            EventGhost.StopProcessing()
+                        </Action>
+                        <Action>
+                            EventGhost.NewJumpIf(XmlIdLink(79), 2, False)
+                        </Action>
+                    </Macro>
+                </Folder>
+                <Macro Name="medium volume preset">
+                    <Event Name="PS3.Button.R2" />
+                    <Event Name="OSM.Keyboard.R2" />
+                    <Action>
+                        EventGhost.PythonCommand(u'volpreset = 56')
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.NewJumpIf(XmlIdLink(79), 2, False)
+                    </Action>
+                </Macro>
+                <Macro Name="min volume preset">
+                    <Event Name="OSM.Keyboard.R3" />
+                    <Event Name="PS3.Button.R3" />
+                    <Action>
+                        EventGhost.PythonCommand(u'volpreset=24')
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.NewJumpIf(XmlIdLink(79), 2, False)
+                    </Action>
+                </Macro>
+                <Macro Name="write volume">
+                    <Event Name="Main.volwrite" />
+                    <Action>
+                        System.MuteOff(0)
+                    </Action>
+                    <Action>
+                        System.SetMasterVolume(100.0, 0)
+                    </Action>
+                    <Action>
+                        FileOperations.Write(2, u'{eg.globals.volume}', u'E:\\Stuff\\misc\\programfiles\\currentvolume.txt', 0, 0, False, False, False, 'cp1252')
+                    </Action>
+                    <Action>
+                        EventGhost.ShowOSD(u'DONE', u'0;-133;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 1.0, False)
+                    </Action>
+                    <Action>
+                        EventGhost.TriggerEvent(u'voldone', 0.0)
+                    </Action>
+                </Macro>
+                <Macro Name="increase volume to preset" id="72">
+                    <Event Name="Main.volup" />
+                    <Action Name="Home Electronics Tira: Transmit IR:Vol. Up">
+                        Tira.TransmitIR('\x00\x00\x00\x00\x08\x00\x00\x00&amp;\x04\x00\x00\x12\x02\x00\x00&lt;\x00\x00\x00\xc5\x00\x00\x00e\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x004\x88\x93\x04\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x0c\x00\x00\x00\xb4_\x00\x00\x00\x00\x00\x00\x87\x00\x00\x00C\x00\x00\x00\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x03\x02\x03\x02\x04\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x03\x02\x03\x02', 1, -1)
+                    </Action>
+                    <Action Name="Python Script: volume=volume+1">
+                        EventGhost.PythonScript(u'if eg.globals.volume &lt; 95:\n    eg.globals.volume=eg.globals.volume+1')
+                    </Action>
+                    <Action Name="Python Script: check if volume=volpreset">
+                        EventGhost.PythonScript(u'if eg.globals.volume == eg.globals.volpreset:\n    eg.TriggerEvent("volwrite")\n    eg.StopMacro()')
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.NewJumpIf(XmlIdLink(72), 2, False)
+                    </Action>
+                </Macro>
+                <Macro Name="volume determiner" id="79">
+                    <Action>
+                        EventGhost.ShowOSD(u'VOL', u'0;-200;0;0;0;700;0;0;0;0;3;2;1;34;Arial', (255, 128, 0), (0, 0, 0), 4, (0, 0), 0, 0.0, False)
+                    </Action>
+                    <Action>
+                        EventGhost.PythonScript(u'if eg.globals.volume &lt; eg.globals.volpreset:\n    eg.TriggerEvent("volup")\nif eg.globals.volume &gt; eg.globals.volpreset:\n    eg.TriggerEvent("voldown")\nif eg.globals.volume == eg.globals.volpreset:\n    eg.TriggerEvent("voldone")')
+                    </Action>
+                </Macro>
+                <Macro Name="decrease volume to preset" id="82">
+                    <Event Name="Main.voldown" />
+                    <Action Name="Home Electronics Tira: Transmit IR: Vol. Down">
+                        Tira.TransmitIR('\x00\x00\x00\x00\x08\x00\x00\x00&amp;\x04\x00\x00\x12\x02\x00\x00&gt;\x00\x00\x00\xc4\x00\x00\x00$\x00\x00\x00Z\x00\x00\x00\x8eX\x00\x00\xe2\x00\x00\x00e\x0c\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x004\x88\x93\x04\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x0c\x00\x00\x00\xc0]\x00\x00\x00\x00\x00\x00\x89\x00\x00\x00\xff\xff\xff\xff\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x04\x05\x04\x06\x04\x05\x04\x07\x02\x03\x02\x03\x02\x03\x02\x08\x00\x01\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x02\x02\x03\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x02\x03\x02\x02\x02\x03\x02\x03\x02\x03\x02\x03\x02\x08\x00', 1, -1)
+                    </Action>
+                    <Action Name="Python Script: volume=volume-1, check if volume=volpreset">
+                        EventGhost.PythonScript(u'eg.globals.volume=eg.globals.volume-1\nif eg.globals.volume == eg.globals.volpreset:\n    eg.TriggerEvent("volwrite")\n    eg.StopMacro()')
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.NewJumpIf(XmlIdLink(82), 2, False)
+                    </Action>
+                </Macro>
+                <Macro Name="clear VOL OSD">
+                    <Event Name="Main.voldone" />
+                    <Action>
+                        EventGhost.ShowOSD(u'', u'0;-24;0;0;0;700;0;0;0;1;0;0;2;32;Arial', (255, 255, 255), (0, 0, 0), 0, (0, 0), 0, 0.01, False)
+                    </Action>
+                </Macro>
+            </Folder>
+            <Folder Name="Volume Synchronizer">
+                <Macro Name="reduce volume to 0">
+                    <Event Name="OSM.Remote.volsync" />
+                    <Action Name="Python Script - set oldvol variable to the level it will return to after the sync">
+                        EventGhost.PythonScript(u'if eg.globals.volume &lt; 55:\n    eg.globals.oldvol = eg.globals.volume\nif eg.globals.volume &gt; 54:\n    eg.globals.oldvol = 55\n')
+                    </Action>
+                    <Action>
+                        EventGhost.PythonCommand(u'volume=0')
+                    </Action>
+                    <Action>
+                        EventGhost.PythonCommand(u'volpreset = -96')
+                    </Action>
+                    <Action>
+                        EventGhost.EnableItem(XmlIdLink(100))
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.NewJumpIf(XmlIdLink(-1), 2, False)
+                    </Action>
+                </Macro>
+                <Macro Name="set volume at 0 and return volume to previous setting" id="100" Enabled="False">
+                    <Event Name="Main.voldone" />
+                    <Action>
+                        EventGhost.PythonCommand(u'volume=0')
+                    </Action>
+                    <Action>
+                        EventGhost.PythonCommand(u'volpreset=eg.globals.oldvol')
+                    </Action>
+                    <Action>
+                        EventGhost.DisableItem(XmlIdLink(100))
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.EnableItem(XmlIdLink(108))
+                    </Action>
+                    <Action>
+                        EventGhost.NewJumpIf(XmlIdLink(-1), 2, False)
+                    </Action>
+                </Macro>
+                <Macro Name="Show OSD: Done" id="108" Enabled="False">
+                    <Event Name="Main.voldone" />
+                    <Action>
+                        EventGhost.DisableItem(XmlIdLink(108))
+                    </Action>
+                    <Action>
+                        EventGhost.StopProcessing()
+                    </Action>
+                    <Action>
+                        EventGhost.TriggerEvent(u'VolumeSynchronizer.Done', 0.0)
+                    </Action>
+                </Macro>
+            </Folder>
+        </Folder>
+    </Folder>
+</EventGhost>
