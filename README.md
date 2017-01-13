@@ -29,3 +29,6 @@ Adding the snippet to your preexisting configuration tree:
 - Right click on Configuration Tree>paste
 - Customize the event that triggers the macro(s) to your preference.
 
+
+#### Contributing
+Pull requests or issue reports are welcome! Please see the [contribution rules](https://github.com/per1234/EventGhost-snippets/blob/master/CONTRIBUTING.md) for instructions.
