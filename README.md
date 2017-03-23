@@ -10,7 +10,7 @@ EventGhost is a free open source automation tool for Windows. http://www.eventgh
 - PS3monitor - Shows OSD when the battery on a PS3 remote needs to be changed or when it has been disconnected. The PS3 remote is great, but the battery life is very short, this macro allows you to change the battery before it gets too low for the remote to work and also alerts when the bluetooth connection has been lost and needs to be reset by unplugging and then plugging back in the bluetooth dongle.
 - ReceiverControl - Volume and power control of an audio receiver via IR transmitter(TIRA 2.1). Features include volume level OSD, volume presets, volume synchronization. Absolute and relative power state control. Uses data files for persistent storage of volume level and power state. Currently configured for use with Pioneer VSX-518 but it can be modified for use with any compatible receiver.
 
-##Installation
+## Installation
 - Download: https://github.com/per1234/EventGhost-snippets/archive/master.zip
 
 As a standalone configuration tree:
