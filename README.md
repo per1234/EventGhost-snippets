@@ -31,4 +31,4 @@ Adding the snippet to your preexisting configuration tree:
 
 
 #### Contributing
-Pull requests or issue reports are welcome! Please see the [contribution rules](https://github.com/per1234/EventGhost-snippets/blob/master/CONTRIBUTING.md) for instructions.
+Pull requests or issue reports are welcome! Please see the [contribution rules](https://github.com/per1234/EventGhost-snippets/blob/master/.github/CONTRIBUTING.md) for instructions.
